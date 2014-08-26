@@ -12,7 +12,7 @@ class Server:
         thread.start_new_thread(self.send, ())
         while True:
             data, obj = self.sock.recvfrom(1024 * 2 * 300000)
-            #print obj
+            print obj
             if obj not in self.online:
                 self.online.append(obj)
 
@@ -26,8 +26,8 @@ class Server:
                 data = on[0]
                 obj = on[1]
                 for x in self.online:
-                    if x != obj:
-                        self.sock.sendto(data, obj)
+                    if obj != x:
+                        self.sock.sendto(data, x)
 
 
 if __name__ == "__main__":
