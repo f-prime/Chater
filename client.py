@@ -5,10 +5,10 @@ import socket
 class Client:
     def __init__(self):
         self.frames = []
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.sock = socket.socket()
         p = pyaudio.PyAudio()
         self.pstream = p.open(format=pyaudio.paInt16, channels=2, rate=44600, input=True, frames_per_buffer=1024)
-        self.ostream = p.open(format=pyaudio.paInt16, channels=1, rate=44100, output=True, frames_per_buffer=1024)
+        self.ostream = p.open(format=pyaudio.paInt16, channels=1, rate=88600, output=True, frames_per_buffer=1024)
         self.connect = ("100.1.73.128", 5555)
 
     def main(self):

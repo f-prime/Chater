@@ -5,13 +5,19 @@ class Server:
     def __init__(self):
         self.frames = []
         self.online = []
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.sock = socket.socket()
         self.host = ("0.0.0.0", 5555)
     def main(self):
         self.sock.bind(self.host)
+        self.sock.listen(5)
         thread.start_new_thread(self.send, ())
         while True:
-            data, obj = self.sock.recvfrom(1024 * 2 * 300000)
+            obj, conn = self.sock.accept()
+            thread.start_new_thread(self.recv, (obj,))
+
+    def recv(self, obj):
+        while True:
+            data = obj.recv(1024)
             print obj
             if obj not in self.online:
                 self.online.append(obj)
@@ -27,7 +33,7 @@ class Server:
                 obj = on[1]
                 for x in self.online:
                     if obj != x:
-                        self.sock.sendto(data, x)
+                        x.send(data)
 
 
 if __name__ == "__main__":
