@@ -11,8 +11,8 @@ class Server:
         self.sock.bind(self.host)
         thread.start_new_thread(self.send, ())
         while True:
-            data, obj = self.sock.recvfrom(1024 * 2 * 10)
-            print obj
+            data, obj = self.sock.recvfrom(1024 * 2 * 300000)
+            #print obj
             if obj not in self.online:
                 self.online.append(obj)
 

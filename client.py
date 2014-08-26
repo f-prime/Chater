@@ -1,16 +1,14 @@
 import pyaudio
 import thread
-import pygame
 import socket
 
 class Client:
     def __init__(self):
         self.frames = []
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        pygame.mixer.init()
-        self.sound = pygame.mixer.Sound
         p = pyaudio.PyAudio()
-        self.pstream = p.open(format=pyaudio.paInt16, channels=2, rate=44100, input=True, frames_per_buffer=1024)
+        self.pstream = p.open(format=pyaudio.paInt16, channels=2, rate=44600, input=True, frames_per_buffer=1024)
+        self.ostream = p.open(format=pyaudio.paInt16, channels=1, rate=44100, output=True, frames_per_buffer=1024)
         self.connect = ("100.1.73.128", 5555)
 
     def main(self):
@@ -18,9 +16,9 @@ class Client:
         thread.start_new_thread(self.talk, ())
         thread.start_new_thread(self.stream, ())
         while True:
-            data = self.sock.recv(1024 * 2 * 10)
+            data = self.sock.recv(1024 * 2 * 1000000)
             if data:
-                self.sound(data).play()
+                self.ostream.write(data, 1024)
 
     def talk(self):
         while True:
