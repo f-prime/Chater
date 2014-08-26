@@ -10,7 +10,7 @@ class Client:
         self.sound = pygame.mixer.Sound
         p = pyaudio.PyAudio()
         self.pstream = p.open(format=pyaudio.paInt16, channels=1, rate=44100, input=True, frames_per_buffer=1024)
-        self.connect = ("localhost", 1024)
+        self.connect = ("100.1.73.128", 5555)
 
     def main(self):
         self.sock.connect(self.connect)
