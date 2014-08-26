@@ -18,7 +18,7 @@ class Client:
         thread.start_new_thread(self.talk, ())
         thread.start_new_thread(self.stream, ())
         while True:
-            data = self.sock.recv(1024)
+            data = self.sock.recv(1024 * 2 * 2)
             if data:
                 self.sound(data).play()
 
