@@ -1,0 +1,2 @@
+record = False
+stream = ""
